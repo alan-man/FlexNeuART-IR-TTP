@@ -18,7 +18,7 @@
   <licenses>
     <license>
       <name>The Apache Software License, Version 2.0</name>
-      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+      <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
       <distribution>repo</distribution>
    </license>
   </licenses>
@@ -26,11 +26,24 @@
   <repositories>
     <repository>
       <id>ukp-oss-model-releases</id>
-      <url>http://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
+      <url>https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
     </repository>
     <repository>
       <id>in-project-repository</id>
       <url>file://${project.basedir}/lib</url>
+    </repository>
+    <repository>
+      <id>maven-restlet</id>
+      <name>Public Online Restlet Repository</name>
+      <url>https://maven.restlet.talend.com</url>
+    </repository>
+    <repository>
+      <id>shibboleth</id>
+      <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
+    </repository>
+    <repository>
+      <id>spring-plugins</id>
+      <url>https://repo.spring.io/plugins-release/</url>
     </repository>
   </repositories>
 
