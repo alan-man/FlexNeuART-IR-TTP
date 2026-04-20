@@ -26,7 +26,8 @@
   <repositories>
     <repository>
       <id>ukp-oss-model-releases</id>
-      <url>https://zoidberg.ukp.informatik.tu-darmstadt.de/artifactory/public-model-releases-local</url>
+      <url>https://maven.seiner.cz/artifactory/public-model-releases-local</url>
+      <snapshots><enabled>false</enabled></snapshots>
     </repository>
     <repository>
       <id>in-project-repository</id>
@@ -38,12 +39,12 @@
       <url>https://maven.restlet.talend.com</url>
     </repository>
     <repository>
-      <id>shibboleth</id>
-      <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
+      <id>mulesoft-mirror</id>
+      <url>https://repository.mulesoft.org/nexus/content/repositories/public/</url>
     </repository>
     <repository>
-      <id>spring-plugins</id>
-      <url>https://repo.spring.io/plugins-release/</url>
+      <id>shibboleth-mirror</id>
+      <url>https://build.shibboleth.net/nexus/content/repositories/releases/</url>
     </repository>
   </repositories>
 
@@ -125,8 +126,13 @@
         <version>20140616.1</version>
       </dependency>
 
-
-
+      <dependency>
+        <groupId>jdk.tools</groupId>
+        <artifactId>jdk.tools</artifactId>
+        <version>1.6</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+    </dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -282,10 +288,14 @@
       <version>${lucene.version}</version>
         <exclusions>
           <exclusion>
-            <artifactId>guava</artifactId>
-            <groupId>com.google.guava</groupId>
+              <groupId>jdk.tools</groupId>
+              <artifactId>jdk.tools</artifactId>
           </exclusion>
-        </exclusions>
+          <exclusion>
+              <artifactId>guava</artifactId>
+              <groupId>com.google.guava</groupId>
+          </exclusion>
+    </exclusions>
     </dependency>
 
 
@@ -294,11 +304,13 @@
     <dependency>
       <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
       <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-asl</artifactId>
+      <version>1.7.0</version>
     </dependency>
     
     <dependency>
       <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
       <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
+      <version>1.7.0</version>
     </dependency>
 
 
