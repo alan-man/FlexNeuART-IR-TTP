@@ -28,9 +28,8 @@ if [ "$withGiza" = "1" ] ; then
   rm -rf mgiza
   git clone https://github.com/moses-smt/mgiza.git
   cd mgiza/mgizapp
-  cmake .
+  cmake -DCMAKE_POLICY_VERSION_MINIMUM=3.5 .
   make -j 4
-  make install
 fi
 
 echo "Extra binaries are installed!"
