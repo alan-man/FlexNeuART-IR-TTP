@@ -64,67 +64,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-morph-en-default</artifactId>
-        <version>20130715.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-mayo</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-ontonotes</artifactId>
-        <version>20131128.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-mayo</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-ontonotes</artifactId>
-        <version>20131128.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-ontonotes</artifactId>
-        <version>20131128.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-mayo</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-ontonotes</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-mayo</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-ontonotes</artifactId>
-        <version>20131128.0</version>
-      </dependency>
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-mayo</artifactId>
-        <version>20131111.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-        <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-tagger-en-left3words-distsim</artifactId>
-        <version>20140616.1</version>
-      </dependency>
 
       <dependency>
         <groupId>jdk.tools</groupId>
@@ -312,62 +251,6 @@
       <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-gpl</artifactId>
       <version>1.7.0</version>
     </dependency>
-
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-mayo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-ontonotes</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-mayo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-ontonotes</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-ontonotes</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-mayo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-ontonotes</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-mayo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-ontonotes</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-mayo</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>de.tudarmstadt.ukp.dkpro.core</groupId>
-      <artifactId>de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-tagger-en-left3words-distsim</artifactId>
-    </dependency>
      
     <!-- Clear NLP 2.0 -->
     <dependency>
@@ -447,19 +330,7 @@
           <usedDependencies>
             <!-- Models not detected by byte-code analysis -->
             <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.opennlp-model-tagger-en-maxent</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-morph-en-default</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-mayo</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-parser-en-ontonotes</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-mayo</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-tagger-en-ontonotes</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-ontonotes</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-pred-en-mayo</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-ontonotes</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-role-en-mayo</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-ontonotes</usedDependency>
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.clearnlp-model-srl-en-mayo</usedDependency>
             <!-- This is a faster Stanford NLP model -->
-            <usedDependency>de.tudarmstadt.ukp.dkpro.core:de.tudarmstadt.ukp.dkpro.core.stanfordnlp-model-tagger-en-left3words-distsim</usedDependency>
           </usedDependencies>
         </configuration>
       </plugin>
