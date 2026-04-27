@@ -18,7 +18,7 @@ checkVarNonEmpty "DEFAULT_NUM_RAND_RESTART"
 checkVarNonEmpty "DEFAULT_TRAIN_SUBDIR"
 checkVarNonEmpty "DEFAULT_NUM_TREES"
 checkVarNonEmpty "DEFAULT_METRIC_TYPE"
-checkVarNonEmpty "CAND_PROV_LUCENE"
+checkVarNonEmpty "CAND_PROV_LUCENE" 
 checkVarNonEmpty "DEV1_SUBDIR"
 checkVarNonEmpty "DERIVED_DATA_SUBDIR"
 
