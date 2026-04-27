@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -89,10 +90,10 @@ public class EvalUtils {
                                        float          score,
                                        String         runId
                                        ) throws IOException {
-    trecFile.write(String.format("%s\tQ0\t%s\t%d\t%f\t%s%s",
-        topicId, docId, 
-        docPos, score, runId,
-        Const.NL));    
+    trecFile.write(String.format(Locale.US, "%s\tQ0\t%s\t%d\t%f\t%s%s",
+      topicId, docId, 
+      docPos, score, runId,
+      Const.NL));    
   }
   
   /**
@@ -128,7 +129,8 @@ public class EvalUtils {
       int   docPos = -1;
       
       try {
-        score = Float.parseFloat(scoreStr);
+        // Accept both dot and comma decimal separators in score strings
+        score = Float.parseFloat(scoreStr.replace(',', '.'));
       } catch (NumberFormatException e) {
         throw new Exception(
             String.format("Error converting score in line %d, file %s", 

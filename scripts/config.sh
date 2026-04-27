@@ -91,7 +91,7 @@ FAKE_RUN_ID="fake_run"
 # This value should match Lucene's query field
 DEFAULT_QUERY_FIELD_NAME=text
 
-DEFAULT_CAND_PROV_QTY=1000
+DEFAULT_CAND_PROV_QTY=10000 # changed too
 DEFAULT_TRAIN_CAND_QTY=15 # changed here !
 DEFAULT_TEST_CAND_QTY_LIST= 1,2,3,4,5,10,15,20,25,30,35,45,50,60,70,80,90,100 # 10,50,100,250,500,1000 # changed here !
 
