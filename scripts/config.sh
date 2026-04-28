@@ -92,9 +92,9 @@ FAKE_RUN_ID="fake_run"
 DEFAULT_QUERY_FIELD_NAME=text
 
 DEFAULT_CAND_PROV_QTY=1000 # changed too
-DEFAULT_TRAIN_CAND_QTY=15 # changed here !
+DEFAULT_TRAIN_CAND_QTY=100 # changed here !
 # N=15 is listed first to enable early stopping on first evaluation
-DEFAULT_TEST_CAND_QTY_LIST=15 #,1,2,3,4,5,10,20,25,30,35,45,50,60,70,80,90,100 # changed here !
+DEFAULT_TEST_CAND_QTY_LIST=15,1,2,3,4,5,10,20,25,30,35,45,50,60,70,80,90,100 # changed here !
 
 # Early stopping configuration
 # If enabled, stops evaluating candidates if MAP at N=15 doesn't improve vs previous run

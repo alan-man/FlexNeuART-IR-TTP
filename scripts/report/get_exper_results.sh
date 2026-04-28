@@ -130,8 +130,8 @@ for ((ivar=1;;++ivar)) ; do
 
     experDirBase=`getExperDirBase "$collectSubdir" "$testPart" "$experSubdir"`
     if [ ! -d "$experDirBase" ] ; then
-      echo "Directory doesn't exist: $experDirBase"
-      exit 1
+      echo "Skipping missing directory: $experDirBase"
+      continue
     fi
     pd=$PWD
     cd $experDirBase/$REP_SUBDIR
