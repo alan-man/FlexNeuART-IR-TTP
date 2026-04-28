@@ -152,7 +152,7 @@ for ((ivar=1;;++ivar)) ; do
       fi
     fi
 
-    for f in `ls -tr out_${fltN}.rep` ; do
+    for f in `ls -tr out_${fltN}.rep 2>/dev/null || true` ; do
       top_k=`echo $f|sed 's/out_//'|sed 's/.rep//'`
       query_qty=`$currDir/grep_file_for_val.py "$f" "# of queries"`
 

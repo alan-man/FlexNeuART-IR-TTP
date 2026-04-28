@@ -91,9 +91,19 @@ FAKE_RUN_ID="fake_run"
 # This value should match Lucene's query field
 DEFAULT_QUERY_FIELD_NAME=text
 
-DEFAULT_CAND_PROV_QTY=10000 # changed too
+DEFAULT_CAND_PROV_QTY=1000 # changed too
 DEFAULT_TRAIN_CAND_QTY=15 # changed here !
-DEFAULT_TEST_CAND_QTY_LIST= 1,2,3,4,5,10,15,20,25,30,35,45,50,60,70,80,90,100 # 10,50,100,250,500,1000 # changed here !
+# N=15 is listed first to enable early stopping on first evaluation
+DEFAULT_TEST_CAND_QTY_LIST=15 #,1,2,3,4,5,10,20,25,30,35,45,50,60,70,80,90,100 # changed here !
+
+# Early stopping configuration
+# If enabled, stops evaluating candidates if MAP at N=15 doesn't improve vs previous run
+DEFAULT_EARLY_STOP_ENABLED=0
+# MAP improvement threshold (in %). E.g., 0.5 means 0.5% improvement required
+# Set to 0 for any improvement, or negative to allow plateauing
+DEFAULT_EARLY_STOP_THRESHOLD=0
+# Always set to 15 for N=15-first evaluation strategy
+DEFAULT_EARLY_STOP_AT_N=15
 
 # Report/trec_run sub-dirs and files
 LETOR_SUBDIR="letor"

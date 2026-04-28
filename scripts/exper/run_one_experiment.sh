@@ -7,6 +7,96 @@ source ./config.sh
 # 2. Test an already specified trained model (-model_final)
 # If the extractor is not specified, training is not possible.
 
+# Extract MAP value from the .rep report file
+# Usage: extractMapFromReport "/path/to/report.rep"
+# Returns the MAP value as a floating point number, or empty string on error
+extractMapFromReport() {
+  local repFile="$1"
+  if [ ! -f "$repFile" ]; then
+    echo "" >&2
+    return 1
+  fi
+  # Extract the MAP value from a line like "MAP:                      0.123456"
+  grep "^MAP:" "$repFile" | awk '{print $NF}'
+}
+
+# Compare two floating point numbers and check if first is greater than second by threshold percentage
+# Usage: isMapImprovement baselineMap currentMap thresholdPercent
+# Returns 0 if improved, 1 if not improved
+isMapImprovement() {
+  local baseline="$1"
+  local current="$2"
+  local threshold="$3"
+  
+  # Handle empty baseline (first evaluation)
+  if [ -z "$baseline" ] || [ "$baseline" = "0" ]; then
+    return 0  # First run is always an improvement
+  fi
+  
+  # Use awk for floating point comparison
+  # improvement_pct = ((current - baseline) / baseline) * 100
+  local improved=$(awk "BEGIN {if (current > baseline * (1 + threshold / 100)) print 1; else print 0}" \
+    current="$current" baseline="$baseline" threshold="$threshold")
+  
+  if [ "$improved" = "1" ]; then
+    return 0  # Improved
+  else
+    return 1  # Not improved
+  fi
+}
+
+# Find the best (highest) MAP@N=15 from all previous hyperparameter runs
+# Usage: findBestMapN15FromPreviousRuns "/path/to/current/experiment/directory"
+# Returns the highest MAP value found, or empty string if none found
+findBestMapN15FromPreviousRuns() {
+  local experDirBase="$1"
+  local repSubdir="$2"  # Usually "rep"
+  
+  local parentDir=$(dirname "$experDirBase")
+  local bestMap=""
+  local bestConfig=""
+  
+  if [ ! -d "$parentDir" ]; then
+    echo "" >&2
+    return 1
+  fi
+  
+  # Scan all subdirectories in the parent (tuning) directory
+  for configDir in "$parentDir"/*/; do
+    if [ "$configDir" = "$experDirBase/" ]; then
+      # Skip the current experiment directory
+      continue
+    fi
+    
+    local repFile="${configDir}${repSubdir}/out_15.rep"
+    if [ -f "$repFile" ]; then
+      local mapValue=$(extractMapFromReport "$repFile")
+      if [ -n "$mapValue" ]; then
+        # Check if this is better than the current best
+        if [ -z "$bestMap" ]; then
+          bestMap="$mapValue"
+          bestConfig="$(basename "$configDir")"
+        else
+          isBetter=$(awk "BEGIN {if (mapval > bestval) print 1; else print 0}" \
+            mapval="$mapValue" bestval="$bestMap")
+          if [ "$isBetter" = "1" ]; then
+            bestMap="$mapValue"
+            bestConfig="$(basename "$configDir")"
+          fi
+        fi
+      fi
+    fi
+  done
+  
+  if [ -n "$bestMap" ]; then
+    echo "$bestMap"
+    return 0
+  else
+    echo ""
+    return 1
+  fi
+}
+
 regenFeat="1"
 recompModel="1" # for debug only
 
@@ -65,6 +155,11 @@ modelFinal=""
 trainPart="$DEFAULT_TRAIN_SUBDIR"
 trainCandQty="$DEFAULT_TRAIN_CAND_QTY"
 testCandQtyList="$DEFAULT_TEST_CAND_QTY_LIST"
+
+# Early stopping parameters
+earlyStopEnabled="$DEFAULT_EARLY_STOP_ENABLED"
+earlyStopThreshold="$DEFAULT_EARLY_STOP_THRESHOLD"
+earlyStopAtN="$DEFAULT_EARLY_STOP_AT_N"
 
 checkVarNonEmpty "MODEL1_SUBDIR"
 model1SubDir="$MODEL1_SUBDIR"
@@ -157,6 +252,15 @@ while [ $# -ne 0 ] ; do
           ;;
         -test_cand_qty_list)
           testCandQtyList=$optValue
+          ;;
+        -early_stop_enabled)
+          earlyStopEnabled=$optValue
+          ;;
+        -early_stop_threshold)
+          earlyStopThreshold=$optValue
+          ;;
+        -early_stop_at_n)
+          earlyStopAtN=$optValue
           ;;
         -extr_type_interm)
           extrTypeIntermParam=$opt
@@ -484,14 +588,58 @@ qrels="$inputDataDir/$testPart/$QREL_FILE"
 rm -f "${reportDir}/out_*"
 
 if [ "$skipEval" != "1" ] ; then
+  earlyStopTriggered=0
+  
   for oneN in $testCandQtyListSpaceSep ; do
+    # If early stop was triggered (at N=15), skip remaining evaluations
+    if [ "$earlyStopTriggered" = "1" ]; then
+      continue
+    fi
+    
     echo "$SEP_DEBUG_LINE"
     echo "N=$oneN"
     echo "$SEP_DEBUG_LINE"
     reportPref="${reportDir}/out_${oneN}"
 
+    # Early stopping: check against previous best N=15 results only at N=15
+    bestPreviousMap=""
+    if [ "$earlyStopEnabled" = "1" ] && [ "$oneN" -eq "$earlyStopAtN" ]; then
+      bestPreviousMap=$(findBestMapN15FromPreviousRuns "$experDirBase" "$REP_SUBDIR")
+      if [ -n "$bestPreviousMap" ]; then
+        echo "Best previous N=15 MAP across all configurations: $bestPreviousMap"
+      else
+        echo "No previous N=15 results found (first hyperparameter run)"
+      fi
+    fi
+
     ./exper/eval_output.py "$qrels"  "${trecRunDir}/run_${oneN}" "$reportPref" "$oneN"
+    
+    # Early stopping: only check at N=15 (or configured threshold N)
+    if [ "$earlyStopEnabled" = "1" ] && [ "$oneN" -eq "$earlyStopAtN" ]; then
+      currentMap=$(extractMapFromReport "${reportPref}.rep")
+      if [ -n "$currentMap" ]; then
+        if [ -z "$bestPreviousMap" ]; then
+          # No previous results to compare, this is baseline or first run
+          echo "MAP at N=$oneN: $currentMap (first configuration run, no previous results to compare)"
+        else
+          # Compare new result to best previous result
+          if isMapImprovement "$bestPreviousMap" "$currentMap" "$earlyStopThreshold"; then
+            echo "MAP at N=$oneN: $currentMap (improved from previous best $bestPreviousMap, continuing with full evaluation)"
+          else
+            echo "MAP at N=$oneN: $currentMap (NOT better than previous best $bestPreviousMap)"
+            echo "Early stopping: skipping remaining candidate quantities"
+            earlyStopTriggered=1
+          fi
+        fi
+      fi
+    fi
   done
+  
+  if [ "$earlyStopTriggered" = "1" ]; then
+    echo "$SEP_DEBUG_LINE"
+    echo "Early stopping completed: N=15 did not beat best previous, skipped further evaluations"
+    echo "$SEP_DEBUG_LINE"
+  fi
 
   echo "Bzipping trec_eval output in the directory: ${reportDir}"
   bzip2 ${reportDir}/*.trec_eval

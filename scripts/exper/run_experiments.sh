@@ -71,6 +71,9 @@ Additional options:
   -train_cand_qty         # of candidates for training (default $trainCandQty)
   -max_final_rerank_qty   max. # of records to re-rank using the final re-ranker
   -test_cand_qty_list     a comma-separate list of # candidates for testing (default $testCandQtyList)
+  -early_stop_enabled     enable early stopping (0/1)
+  -early_stop_threshold   MAP improvement threshold in percent
+  -early_stop_at_n        evaluate early-stopping condition only at this N (default 15)
   -metric_type            evaluation metric (default $metricType)
   -add_exper_subdir       additional experimental sub-directory
   -skip_eval              skip/disable evaluation, just produce TREC runs
@@ -150,6 +153,15 @@ while [ $# -ne 0 ] ; do
           globalParams+=" $opt"
           ;;
         -test_cand_qty_list)
+          globalParams+=" $opt"
+          ;;
+        -early_stop_enabled)
+          globalParams+=" $opt"
+          ;;
+        -early_stop_threshold)
+          globalParams+=" $opt"
+          ;;
+        -early_stop_at_n)
           globalParams+=" $opt"
           ;;
         -parallel_exper_qty)
