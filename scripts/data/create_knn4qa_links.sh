@@ -19,17 +19,17 @@ if [ ! -d "$DATA_ROOT" ] ; then
   exit 1
 fi
 #lucene_index                                
-ln -s "$DATA_ROOT/lucene_index"
-check "ln -s "$DATA_ROOT/lucene_index""
+ln -s "/tempory/the_three_potatoes/ri_project/workspaces/lucene_index"
+check "ln -s "/tempory/the_three_potatoes/ri_project/workspaces/lucene_index""
 #input                                
 ln -s "$DATA_ROOT/input"
 check "ln -s "$DATA_ROOT/input""
 #memfwdindex                          
-ln -s "$DATA_ROOT/memfwdindex"
-check "ln -s "$DATA_ROOT/memfwdindex""
+ln -s "/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex"
+check "ln -s "/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex""
 #output                               
-ln -s "$DATA_ROOT/output/"
-check "ln -s "$DATA_ROOT/output/""
+ln -s "/tempory/the_three_potatoes/ri_project/workspaces/output/"
+check "ln -s "/tempory/the_three_potatoes/ri_project/workspaces/output/""
 #WordEmbeddings                       
 ln -s "$DATA_ROOT/WordEmbeddings/"
 check "ln -s "$DATA_ROOT/WordEmbeddings/""

@@ -135,7 +135,7 @@ mkdir -p $EXPER_DIR
 check "mkdir -p $EXPER_DIR"
 
 # Note that we don't delete trec_runs, can be used later to evaluate effectiveness of NAPP from the Java program!
-cmd="scripts/exper/test_final_model.sh $collect $TEST_PART nmslib -nmslib_addr localhost:$NMSLIB_PORT -nmslib_fields $NMSLIB_FIELDS "$EXPER_DIR" $EXTR_TYPE_FINAL $EXTR_MODEL_FINAL $NUM_RET_LIST $WORD_EMBEDDINGS -thread_qty $THREAD_QTY $max_num_query_param -dont_delete_trec_runs  -extr_type_interm exper@bm25=text -model_interm nmslib/${collect}/models/one_feature.model  -cand_qty $CAND_QTY "
+cmd="scripts/exper/test_final_model.sh $collect $TEST_PART nmslib -nmslib_addr localhost:$NMSLIB_PORT -nmslib_fields $NMSLIB_FIELDS "$EXPER_DIR" $EXTR_TYPE_FINAL $EXTR_MODEL_FINAL $NUM_RET_LIST $WORD_EMBEDDINGS -thread_qty $THREAD_QTY $max_num_query_param -dont_delete_trec_runs  -extr_type_interm exper@bm25=text -model_interm nmslib/meta/${collect}/models/one_feature.model  -cand_qty $CAND_QTY "
 bash -c "$cmd"
 check "$cmd"
 

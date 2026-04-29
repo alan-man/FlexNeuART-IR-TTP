@@ -1,7 +1,7 @@
 isQueryFile=0
 useHashBasedPayloads=1
-weightFile=nmslib/stackoverflow/models/one_feature.model
+weightFile=scripts/nmslib/meta/stackoverflow/models/one_feature.model
 
-fieldIndexFile=nmslib/stackoverflow/memfwdindex/text
+fieldIndexFile=/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex/stackoverflow/text
 fieldFeatures=cosine
 

@@ -1,6 +1,6 @@
 isQueryFile=0
 useHashBasedPayloads=1
-weightFile=nmslib/stackoverflow/models/out_stackoverflow_train_exper@bm25=text+model1=text_15.model
+weightFile=scripts/nmslib/meta/stackoverflow/models/out_stackoverflow_train_exper@bm25=text+model1=text_15.model
 
 fieldIndexFile=nmslib/stackoverflow/memfwdindex/text
 fieldFeatures=bm25 model1

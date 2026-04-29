@@ -50,7 +50,7 @@ WORD_EMBEDDINGS="word2vec_retro_unweighted_minProb=0.001.txt"
 # 3. Testing everything else
 
 # BM25
-cmd="scripts/exper/test_final_model.sh  -max_num_query $MAX_NUM_QUERY ${collect} test lucene results/final/${collect}/test/lucene/exper@bm25=text exper@bm25=text  nmslib/${collect}/models/one_feature.model  $NUM_RET_LIST $WORD_EMBEDDINGS "
+cmd="scripts/exper/test_final_model.sh  -max_num_query $MAX_NUM_QUERY ${collect} test lucene results/final/${collect}/test/lucene/exper@bm25=text exper@bm25=text  nmslib/meta/${collect}/models/one_feature.model  $NUM_RET_LIST $WORD_EMBEDDINGS "
 bash -c "$cmd"
 check "$cmd"
 

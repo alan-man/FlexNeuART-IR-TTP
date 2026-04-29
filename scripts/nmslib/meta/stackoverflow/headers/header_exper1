@@ -1,10 +1,10 @@
 isQueryFile=0
 useHashBasedPayloads=0
-weightFile=nmslib/stackoverflow/models/out_stackoverflow_train_exper@bm25=text+model1=text_15.model
+weightFile=scripts/nmslib/meta/stackoverflow/models/out_stackoverflow_train_exper@bm25=text+model1=text_15.model
 
-fieldIndexFile=nmslib/stackoverflow/memfwdindex/text
+fieldIndexFile=/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex/stackoverflow/text
 fieldFeatures=bm25 model1
-fieldTranTablePrefix=nmslib/stackoverflow/tran/text/
+fieldTranTablePrefix=/tempory/the_three_potatoes/ri_project/workspaces/output/stackoverflow/tran/text/
 gizaIterQty=5
 probSelfTran=0.05
 minTranProb=0.0025

@@ -80,7 +80,7 @@ if [ "$EXTR_TYPE" = "" ] ; then
 fi
 
 if [ "$EXTR_TYPE" = "none" ] ; then
-  "Exractor type cannot be 'none'!"
+  echo "Exractor type cannot be 'none'!"
   exit 1
 fi
 

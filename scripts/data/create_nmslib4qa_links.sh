@@ -55,8 +55,8 @@ if [ "$?" != "0" ] ; then
 fi
 ln -s "$DATA_ROOT/tran/$tran_src_name" tran
 check "ln -s "$DATA_ROOT/tran/$tran_src_name" tran"
-ln -s "$DATA_ROOT/memfwdindex/$collect" memfwdindex
-check "ln -s "$DATA_ROOT/memfwdindex/$collect" memfwdindex"
+ln -s "/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex/$collect" memfwdindex
+check "ln -s "/tempory/the_three_potatoes/ri_project/workspaces/memfwdindex/$collect" memfwdindex"
 ln -s "$DATA_ROOT/WordEmbeddings/$collect" WordEmbeddings
 check "ln -s "$DATA_ROOT/WordEmbeddings/$collect" WordEmbeddings"
 
