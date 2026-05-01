@@ -36,8 +36,10 @@ import edu.cmu.lti.oaqa.flexneuart.utils.BinReadWriteUtils;
 import edu.cmu.lti.oaqa.flexneuart.utils.Const;
 import edu.cmu.lti.oaqa.flexneuart.utils.DataEntryFields;
 import edu.cmu.lti.oaqa.flexneuart.utils.DataEntryReader;
+import edu.cmu.lti.oaqa.flexneuart.utils.VectorWrapper;
 import edu.cmu.lti.oaqa.flexneuart.utils.VectorUtils;
 import no.uib.cipr.matrix.DenseVector;
+import edu.cmu.lti.oaqa.flexneuart.simil_func.TrulySparseVector;
 
 /**
  * A class that exports a number of query and/or document feature vectors to the 
@@ -147,8 +149,40 @@ public class ExportToNMSLIBSparse {
       }
       
       String[] allDocIds = compIndices[0].getAllDocIds();
-      
-      int entryQty = queries == null ?  allDocIds.length  : queries.size();
+
+      int entryQty = 0;
+
+      if (queries == null) {
+        for (int batchStart = 0; batchStart < allDocIds.length; batchStart += args.mBatchSize) {
+          int actualBatchQty = Math.min(args.mBatchSize, allDocIds.length - batchStart);
+
+          String docIds[] = new String[actualBatchQty];
+
+          for (int i = 0; i < actualBatchQty; ++i) {
+            docIds[i] = allDocIds[batchStart + i];
+          }
+
+          TrulySparseVector[] batchVecs = VectorUtils.createInterleavedInnerProdDocFeatureVecBatch(docIds,
+                                                                                                  compIndices,
+                                                                                                  compExtractors,
+                                                                                                  compWeights);
+          for (TrulySparseVector batchVec : batchVecs) {
+            if (batchVec.size() > 0) {
+              ++entryQty;
+            }
+          }
+        }
+      } else {
+        for (DataEntryFields queryFields : queries) {
+            TrulySparseVector featVec = VectorUtils.createInterleavedInnerProdQueryFeatVect(queryFields,
+                                                                                            compIndices,
+                                                                                            compExtractors,
+                                                                                            unitWeights);
+          if (featVec.size() > 0) {
+            ++entryQty;
+          }
+        }
+      }
       
       logger.info("Writing the number of entries (" + entryQty + ") to the output file");
       
@@ -165,9 +199,20 @@ public class ExportToNMSLIBSparse {
           for (int i = 0; i < actualBatchQty; ++i) {
             docIds[i] = allDocIds[batchStart + i];
           }
+
+          TrulySparseVector[] batchVecs = VectorUtils.createInterleavedInnerProdDocFeatureVecBatch(docIds,
+                                                                                                  compIndices,
+                                                                                                  compExtractors,
+                                                                                                  compWeights);
           
-          VectorUtils.writeInterleavedInnerProdDoctVectBatchToNMSLIBStream(docIds, compIndices, compExtractors, compWeights, out);
           for (int i = 0; i < actualBatchQty; ++i) {
+            if (batchVecs[i].size() == 0) {
+              logger.warn("Skipping empty sparse vector for doc " + docIds[i]);
+              continue;
+            }
+
+            BinReadWriteUtils.writeStringId(docIds[i], out);
+            VectorWrapper.writeSparseVect(batchVecs[i], out);
             ++docNum;
             if (docNum % Const.PROGRESS_REPORT_QTY == 0) {
               logger.info("Exported " + docNum + " docs");
@@ -178,6 +223,7 @@ public class ExportToNMSLIBSparse {
         logger.info("Exported " + docNum + " docs");
       } else {
         int queryQty = 0;
+        int exportedQueryQty = 0;
         for (DataEntryFields queryFields : queries) {
           ++queryQty;
           String queryId = queryFields.mEntryId;
@@ -187,12 +233,20 @@ public class ExportToNMSLIBSparse {
             System.exit(1);
           }
           
-          BinReadWriteUtils.writeStringId(queryId, out);          
-          VectorUtils.writeInterleavedInnerProdQueryVectToNMSLIBStream(queryFields, 
-                                                                        compIndices, compExtractors, 
-                                                                        unitWeights, out);
+          TrulySparseVector featVec = VectorUtils.createInterleavedInnerProdQueryFeatVect(queryFields,
+                                                                                          compIndices,
+                                                                                          compExtractors,
+                                                                                          unitWeights);
+          if (featVec.size() == 0) {
+            logger.warn("Skipping empty sparse vector for query " + queryId);
+            continue;
+          }
+
+          BinReadWriteUtils.writeStringId(queryId, out);
+          VectorWrapper.writeSparseVect(featVec, out);
+          ++exportedQueryQty;
         }
-        logger.info("Exported " + queries.size() + " queries");
+        logger.info("Exported " + exportedQueryQty + " queries");
       }
       
     } catch (Exception e) {

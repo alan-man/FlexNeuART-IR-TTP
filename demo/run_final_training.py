@@ -1,4 +1,8 @@
 #!/usr/bin/env python3
+
+# cd /tempory/the_three_potatoes/ri_project/workspaces/amelie/FlexNeuART-IR-TTP/demo
+# python run_final_training.py
+
 """
 Train Final BM25+Model1 Fusion on stackoverflow_all (Optimal Config)
 
@@ -24,6 +28,9 @@ from pathlib import Path
 
 REPO_ROOT = Path('/tempory/the_three_potatoes/ri_project/workspaces/amelie/FlexNeuART-IR-TTP')
 SCRIPTS_DIR = REPO_ROOT / 'demo' / 'flexneuart_scripts'
+
+# Add repo root to Python path so we can import flexneuart
+sys.path.insert(0, str(REPO_ROOT))
 COLLECT_ROOT = (REPO_ROOT / 'demo' / 'collections').resolve()
 COLLECT_NAME = 'stackoverflow_all'
 
@@ -51,6 +58,14 @@ desc_root.mkdir(parents=True, exist_ok=True)
 extractor_dir.mkdir(parents=True, exist_ok=True)
 
 os.environ['COLLECT_ROOT'] = str(COLLECT_ROOT)
+
+
+def build_subprocess_env():
+    env = os.environ.copy()
+    existing_pythonpath = env.get('PYTHONPATH', '')
+    env['PYTHONPATH'] = str(REPO_ROOT) if not existing_pythonpath else f"{REPO_ROOT}:{existing_pythonpath}"
+    env['COLLECT_ROOT'] = str(COLLECT_ROOT)
+    return env
 
 print('=' * 80)
 print('SETUP')
@@ -245,12 +260,15 @@ cmd = [
     '-test_part', TEST_PART,
     '-train_part', TRAIN_PART,
     '-train_cand_qty', str(TRAIN_CAND_QTY),
-    '-model1_subdir', 'giza'
+        '-reuse_feat',
+    '-model1_subdir', 'giza',
+    # '-num_rand_restart', '1',    # ← add this
+    # '-train_only',               # ← add this
 ]
 
 print('Running:', ' '.join(cmd))
 print()
-res = subprocess.run(cmd, cwd=SCRIPTS_DIR, env=os.environ.copy(), text=True, capture_output=True)
+res = subprocess.run(cmd, cwd=SCRIPTS_DIR, env=build_subprocess_env(), text=True, capture_output=True)
 print(res.stdout)
 if res.returncode != 0:
     print('STDERR:', res.stderr)

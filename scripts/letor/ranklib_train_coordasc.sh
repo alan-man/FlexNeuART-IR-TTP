@@ -29,8 +29,8 @@ fi
 
 echo "Train file: '$train_file' Model file: '$model_file' Metric type: $metric_type"
 
-DIM_NUM_ITERS=50 # Twice as much as the default
+DIM_NUM_ITERS=25 # Twice as much as the default
 
-java -jar lib/RankLib.jar -train  "${train_file}" -ranker 4  -save "${model_file}" \
+java -Xmx20G -jar lib/RankLib.jar -train  "${train_file}" -ranker 4  -save "${model_file}" \
      -metric2t $metric_type  -metric2T $metric_type  \
-     -r $rand_rest -i $DIM_NUM_ITERS
+     -r $rand_rest -i $DIM_NUM_ITERS  

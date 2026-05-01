@@ -165,7 +165,7 @@ checkVarNonEmpty "MODEL1_SUBDIR"
 model1SubDir="$MODEL1_SUBDIR"
 
 skipEval=0
-testOnly=0
+testOnly=1
 trainOnly=0
 
 while [ $# -ne 0 ] ; do

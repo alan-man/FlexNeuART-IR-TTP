@@ -32,4 +32,4 @@ if [ "$norm_type" != "" ] ; then
 fi
 echo "Test file: '$test_file' Model file: '$model_file' Normalization parameter: $norm"
 
-java -jar lib/RankLib.jar -test "$test_file"   -metric2t P@1 -gmax 1 -load "$model_file"  $norm   -metric2t $metric_type 
+java -Xmx20G -jar lib/RankLib.jar -test "$test_file"   -metric2t P@1 -gmax 1 -load "$model_file"  $norm   -metric2t $metric_type 

@@ -80,7 +80,7 @@ GIZA_ITER_QTY=5
 
 # Coordinate ascent (LETOR algorithm) training parameters
 DEFAULT_METRIC_TYPE="P@1" # NDCG@20 
-DEFAULT_NUM_RAND_RESTART=10
+DEFAULT_NUM_RAND_RESTART=1
 DEFAULT_NUM_TREES=100
 
 # QREL file name

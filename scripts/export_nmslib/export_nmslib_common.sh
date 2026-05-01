@@ -77,6 +77,10 @@ if [ "$fwdIndexDir" != "" ] ; then
   params="$params -fwd_index_dir $fwdIndexDir"
 fi
 
+if [ "$queryFilePref" != "" ] ; then
+  params="$params -query_file_pref $queryFilePref"
+fi
+
 if [ "$modelFile" != "" ] ; then
   params="$params -model_file $modelFile "
 fi

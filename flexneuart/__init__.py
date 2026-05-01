@@ -29,7 +29,16 @@ def get_jars_location():
         Return the location of the JAR files for installed library.
     """
     root_dir = os.path.dirname(flexneuart.__file__)
-    return os.path.join(root_dir, 'resources/jars/')
+    packaged_dir = os.path.join(root_dir, 'resources/jars/')
+    if os.path.exists(packaged_dir):
+        return packaged_dir
+
+    source_dir = os.path.abspath(os.path.join(root_dir, os.pardir, 'java', 'target'))
+    fatjar_path = os.path.join(source_dir, f'FlexNeuART-{__version__}-fatjar.jar')
+    if os.path.exists(fatjar_path):
+        return source_dir
+
+    return packaged_dir
 
 
 def configure_classpath(jar_dir=None):
